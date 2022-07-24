@@ -1,0 +1,16 @@
+from base_settings import *
+
+DEBUG = True
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('LOCAL_DB_NAME'),
+        'USER': config('LOCAL_DB_USER'),
+        'PASSWORD': config('LOCAL_DB_PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
