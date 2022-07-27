@@ -189,6 +189,19 @@ EXC_EMAIL_RECEPIENTS = ["chidinnamekannadi@gmail.com"]
 EXC_SENDER_EMAIL = "errors@afex_app.com"
 EXC_USERNAME_FIELD = "email"
 
+# Spectacular Settings
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Afex Social Media API',
+    'DESCRIPTION': 'API that handles all backend requests for Afex social media app.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SERVE_URLCONF': 'afex_app.urls',
+    'SERVERS': [{"url": "https://afex-app.herokuapp.com/v1"}],
+    'SWAGGER_UI_SETTINGS': {
+        'url': '/v1/schema/',  # relative path
+    },
+}
+
 # Settings unique to this application
 APPLICATION_SETTINGS = {
     # Default time to live before pins/keys are expired.
