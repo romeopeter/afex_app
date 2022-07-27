@@ -1,0 +1,2 @@
+manage.py merge=ours
+afex_app/wsgi.py merge=ours
