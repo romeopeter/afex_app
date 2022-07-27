@@ -169,7 +169,7 @@ REST_FRAMEWORK = {
 }
 
 env = os.environ.get("DJANGO_SETTINGS_MODULE")
-dev = "credisol.settings.development"
+dev = "afex_app.settings.development"
 
 # Simple JWT settings
 SIMPLE_JWT = {
@@ -195,8 +195,8 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'API that handles all backend requests for Afex social media app.',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    'SERVE_URLCONF': 'afex_app.urls',
-    'SERVERS': [{"url": "https://afex-app.herokuapp.com/v1"}],
+    'SERVE_URLCONF': 'afex_app.versioned_urls',
+    'SERVERS': [] if env == dev else [{"url": "https://afex-app.herokuapp.com/v1"}],
     'SWAGGER_UI_SETTINGS': {
         'url': '/v1/schema/',  # relative path
     },
