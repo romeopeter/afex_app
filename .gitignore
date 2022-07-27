@@ -131,5 +131,8 @@ dmypy.json
 # Vscode files
 .vscode/
 
+# media files
+mediafiles/
+
 # .dump files from rabbitMQ or postgres
 *.dump
