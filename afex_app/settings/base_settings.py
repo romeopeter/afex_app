@@ -44,11 +44,13 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_spectacular',
     'django_extensions',
+    'storages',
 
     # project apps
     'common_app',
+    'exceptions_and_logging',
     'registration',
-
+    'chats'
 ]
 
 MIDDLEWARE = [
@@ -61,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'afex_app.urls'
+ROOT_URLCONF = 'afex_app.versioned_urls'
 
 TEMPLATES = [
     {
@@ -92,6 +94,9 @@ DATABASES = {
     }
 }
 
+# Redis
+REDIS_HOST = "localhost"
+REDIS_PORT = 6379
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -127,13 +132,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [ BASE_DIR / "static" ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+# AWS settings
+USE_S3 = config('USE_S3', default=False, cast=bool)
+if USE_S3:
+    AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME")
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    DEFAULT_FILE_STORAGE = 'afex_app.storage_backends.MediaStorage'
+    STATICFILES_STORAGE = 'afex_app.storage_backends.StaticStorage'
+else:
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [ BASE_DIR / "static" ]
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -142,7 +157,8 @@ AUTH_USER_MODEL = 'registration.User'
 # Rest Framework Settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.BasicAuthentication",
+        # "rest_framework.authentication.BasicAuthentication",
+        "registration.authentication.CustomAuthBackend",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
@@ -163,7 +179,21 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(weeks=2) if env == dev else timedelta(weeks=1)
 }
 
+# Cors settings, experimental app - allow all for productiom and development
+CORS_ALLOW_ALL_ORIGINS = True
+
+# Email settings, use console backend for productiom and development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 # Exceptions and Logging settings
 EXC_EMAIL_RECEPIENTS = ["chidinnamekannadi@gmail.com"]
 EXC_SENDER_EMAIL = "errors@afex_app.com"
 EXC_USERNAME_FIELD = "email"
+
+# Settings unique to this application
+APPLICATION_SETTINGS = {
+    # Default time to live before pins/keys are expired.
+    "DEFAULT_PIN_TTL": timedelta(hours=1),
+    "ONLINE_STATUS_POLICY": config("ONLINE_STATUS_POLICY", default="LoggedInIsOnline"),
+}

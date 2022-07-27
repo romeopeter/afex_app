@@ -13,9 +13,35 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
+
+from django.urls import path, include
+from django.http.response import HttpResponse
+
+# drf
+from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenRefreshView
+
+from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
+
+# application views
+# from registration.views import (UserViewsets)
+
+from registration.views.user import UserViewsets
+from registration.views.registration import RegistrationViewsets
+from chats.views import ChatViewset
+
+
+router = DefaultRouter()
+
+router.register(r"registration", RegistrationViewsets, "registration")
+router.register(r"users", UserViewsets, "users")
+router.register(r'chats', ChatViewset, "chats")
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("schema/", SpectacularAPIView.as_view(), name="schema_view"),
+    path("swagger_ui/", SpectacularSwaggerView.as_view(url_name="schema_view"), name="swagger_view"),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
+
+urlpatterns += router.urls

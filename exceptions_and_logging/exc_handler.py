@@ -29,7 +29,7 @@ stream_log_handler.setFormatter(base_formatter)
 logger.addHandler(stream_log_handler)
 
 
-def log_and_send_mail(exc: app_or_python_errors, extra_kwargs, allow_async=True):
+def log_and_send_mail(exc: app_or_python_errors, extra_kwargs, allow_async=False):
     if isinstance(exc, app_exceptions.BaseAppException):
         # log only server errors
         if str(exc.http_status_code).startswith("5"):
