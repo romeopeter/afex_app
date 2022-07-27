@@ -134,7 +134,9 @@ class UserViewsets(
         return Response(data)
 
     @extend_schema(
-        parameters=[*paginator_header_params],
+        parameters=[
+            *paginator_header_params, SearchUrlParamsSerializer
+        ],
         responses={
             200: OpenApiResponse(
                 BriefUserDisplaySerializer(many=True),

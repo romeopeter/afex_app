@@ -136,9 +136,11 @@ class AddFriendsSerializer(serializers.Serializer):
 
     def create(self, validated_data: dict) -> models.QuerySet:
         # remove_duplicates
-        friend_ids = set(validated_data["friends"])
-        friends_qset = get_user_model().objects.filter(id__in=friend_ids)
         user = self.get_user()
+        friend_ids = set(validated_data["friends"])
+        friends_qset = get_user_model().objects \
+            .filter(id__in=friend_ids) \
+            .exclude(id=user.id)
         for friend in friends_qset:
             user.friends.add(friend)
         return user.friends.all()
