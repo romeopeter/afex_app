@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+from decouple import config, Csv
 from datetime import timedelta
 import os
 
@@ -24,8 +24,6 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-mwk_2e0*c!@%n45-=itqdgk!kav25gq1hdrlb3apn*k2y6aesf'
-
-ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
