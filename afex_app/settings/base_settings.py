@@ -196,7 +196,7 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'SERVE_URLCONF': 'afex_app.versioned_urls',
-    'SERVERS': [] if env == dev else [{"url": "https://afex-app.herokuapp.com/v1"}],
+    'SERVERS': [] if env == dev else [{"url": "https://afex-app.herokuapp.com"}],
     'SWAGGER_UI_SETTINGS': {
         'url': '/v1/schema/',  # relative path
     },
