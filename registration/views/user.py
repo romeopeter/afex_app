@@ -83,7 +83,7 @@ class UserViewsets(
 
         return super().destroy(request, *args, **kwargs)
 
-    @action(detail=False, methods=["delete"], permission_classes=[IsAdminUser])
+    @action(detail=True, methods=["delete"])
     def delete_all(self, request, *args, **kwargs):
         """Convenience method to delete all users"""
 
