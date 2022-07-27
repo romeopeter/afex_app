@@ -1,4 +1,0 @@
-This is a file right here.
-It has some words.
-It also has some lines.
-But most importantly, it lives in my computer and is mine.
