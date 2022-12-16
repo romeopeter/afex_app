@@ -181,7 +181,7 @@ class UIOpenSerializer(serializers.Serializer):
     ui_open = serializers.BooleanField(
         help_text="Indicates if application UI is in focus."
     )
-
+        
 
 class IntegrityErrorSerializer(serializers.Serializer):
     """Hack for isolating Integrity errors from general validation errors."""

@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
@@ -11,9 +10,6 @@ from .managers import UserManager
 from .authentication import get_online_policy_class
 
 # from chats.models import Chat
-
-
-
 
 class User(AbstractUser):
 
@@ -35,9 +31,8 @@ class User(AbstractUser):
         help_text="Friends of the user"
     )
 
-    # other class constants
+    '''Other class constant. setting unique identifier'''
     username = None
-
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
@@ -50,7 +45,6 @@ class User(AbstractUser):
 
     def is_friends_with(self, other_user):
         return bool(self.friends.filter(pk=other_user.id))
-
-
-
-
+    
+    def __str__(self):
+        return self.email
