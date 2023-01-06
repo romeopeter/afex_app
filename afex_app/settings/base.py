@@ -191,7 +191,7 @@ EXC_USERNAME_FIELD = "email"
 # Spectacular Settings
 SPECTACULAR_SETTINGS = {
     "TITLE": "Afex Social Media API",
-    "DESCRIPTION": "API that handles all backend requests for Afex social media app.",
+    "DESCRIPTION": "API endpoints for handling request for/ Afex social media app.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "SERVE_URLCONF": "afex_app.versioned_urls",
