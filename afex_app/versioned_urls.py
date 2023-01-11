@@ -6,7 +6,7 @@ from django.contrib import admin
 def home_view(request):
     """Server health check"""
 
-    return HttpResponse("All is well")
+    return HttpResponse("Server is up and running 🏎💨")
 
 
 urlpatterns = [
