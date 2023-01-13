@@ -25,6 +25,7 @@ colorlog = "6.6.0"
 celery = "5.2.7"
 djangorestframework = "^3.14.0"
 drf-spectacular = "0.25.1"
+whitenoise = "^6.3.0"
 
 [tool.poetry.dev-dependencies]
 
